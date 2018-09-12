@@ -1,6 +1,8 @@
 #include "dijkstra.hpp"
 #include <iostream>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 
 // default constructor
 Dijkstra::Dijkstra() {
@@ -22,6 +24,7 @@ Dijkstra::Dijkstra(int num_nodes) {
 
 }
 
+// prints graph out to console
 void Dijkstra::print_graph() {
   for (int i = 0; i < size_; i++) {
     for (int j = 0; j < size_; j++) {
@@ -31,7 +34,26 @@ void Dijkstra::print_graph() {
   }
 }
 
+// fill graph - for each node, if rand is less than density, fill with rand from 1.0 to distance_range
 int Dijkstra::initialize_graph(double density, double distance_range) {
+
+  std::srand(std::time(0)); // seed for rand()
+
+  for (int i = 0; i < size_; i++) {
+    for (int j = i; j < size_; j++) {
+      if (i == j){
+        graph_[i][j] = 0;
+      }
+      else {
+        double density_roll = static_cast<double>(rand() % 9 + 1) / 10;
+        if (density_roll <= density){
+          double edge_weight = static_cast<double>(rand() % static_cast<int>(distance_range * 10)) / 10;
+          graph_[i][j] = edge_weight;
+          graph_[j][i] = edge_weight;
+        }
+      }
+    }
+  }
   return 0;
 }
 

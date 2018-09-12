@@ -20,11 +20,11 @@ int main() {
   std::cin >> density;
 
   Dijkstra d_graph = Dijkstra(size);
-  std::cout << "uninitialized graph is:\n";
-  d_graph.print_graph();
+//  std::cout << "uninitialized graph is:\n";
+//  d_graph.print_graph();
   d_graph.initialize_graph(density, range);
-  std::cout << "initialized graph is:\n";
-  d_graph.print_graph();
+//  std::cout << "initialized graph is:\n";
+//  d_graph.print_graph();
   std::cout << "Average shortest path is " << d_graph.get_avg_shortest_path() << "\n";
 
   int testnode = 1;

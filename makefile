@@ -1,16 +1,30 @@
 CXX = g++
 CXXFLAGS = -std=c++0x
 
-SRCS = dijkstra_main.cpp dijkstra.cpp
-OBJS = dijkstra_main.o dijkstra.o
+CLASS = dijkstra.cpp
+MAIN = dijkstra_main.cpp
+TEST = dijkstra_test.cpp
+CLASSO = dijkstra.o
+MAINO = dijkstra_main.o
+TESTO = dijkstra_test.o
 HEADERS = dijkstra.hpp
 EXEC = dmoney
+TESTX = testy
 
-all: ${OBJS} ${HEADERS}
-	${CXX} ${OBJS} ${CXXFLAGS} -o ${EXEC}
+all: ${CLASSO} ${MAINO} ${HEADERS}
+	${CXX} ${MAINO} ${CLASSO} ${CXXFLAGS} -o ${EXEC}
 
-${OBJS}: ${SRCS}
+test: ${CLASSO} ${TESTO} ${HEADERS}
+	${CXX} ${CLASSO} ${TESTO} ${CXXFLAGS} -o ${TESTX}
+
+${CLASSO}: ${CLASS}
+	${CXX} ${CXXFLAGS} -c $(@:.o=.cpp)
+
+${MAINO}: ${MAIN}
+	${CXX} ${CXXFLAGS} -c $(@:.o=.cpp)
+
+${TESTO}: ${TEST}
 	${CXX} ${CXXFLAGS} -c $(@:.o=.cpp)
 
 clean:
-	rm *.o ${EXEC}
+	rm *.o ${EXEC} ${TESTX}

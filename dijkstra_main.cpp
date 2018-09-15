@@ -23,12 +23,31 @@ int main() {
 //  std::cout << "uninitialized graph is:\n";
 //  d_graph.print_graph();
   d_graph.initialize_graph(density, range);
-//  std::cout << "initialized graph is:\n";
-//  d_graph.print_graph();
+  std::cout << "initialized graph is:\n";
+  d_graph.print_graph();
+
   std::cout << "Average shortest path is " << d_graph.get_avg_shortest_path() << "\n";
 
+/*  
+  std::vector<int> bob;
+  for (int i = 0; i < 10; i++){
+    bob.push_back(i);
+  }
+  for (auto i : bob){
+    std::cout << i << " ";
+  }
+  std::cout << "\n";
+
+  bob.erase(bob.begin() + 5);
+  for (auto i : bob){
+    std::cout << i << " ";
+  }
+  std::cout << "\n";
+  */
+  /*
   int testnode = 1;
 
+  
   while (testnode > 0) {
     std::cout << "Enter a node number to get the shortest path from 1 or 0 to quit\n";
     std::cin >> testnode;
@@ -36,6 +55,7 @@ int main() {
       std::cout << "Shortest path from node 1 to node " << testnode << " is " << d_graph.get_shortest_path(testnode) << "\n";
     }
   }
+  */
 
 }
 

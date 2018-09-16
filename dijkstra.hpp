@@ -15,6 +15,7 @@ public:
   void append_node_to_open(int node, double value);
   void append_node_to_closed(int node, double value);
   double get_avg_shortest_path();
+  void calc_shortest_paths();
   int is_node_in_open(int node);
   int is_node_in_closed(int node);
 

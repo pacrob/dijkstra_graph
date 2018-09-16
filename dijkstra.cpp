@@ -89,6 +89,22 @@ void Dijkstra::append_node_to_closed(int node, double value){
 }
 
 double Dijkstra::get_avg_shortest_path(){
+  // calculate shortst paths to each node, will be in closed_
+  calc_shortest_paths();
+
+  // sum shortest paths to reachable nodes, divide by number of nodes and return
+  double accum = 0.0;
+  int count = 0;
+
+  for ( auto i : closed_){
+    accum += std::get<1>(i);
+    ++count;
+  }
+  //std::cout << "reachable node count is " << closed_.size() << "\n";
+  return (accum / static_cast<double>(count));
+}
+
+void Dijkstra::calc_shortest_paths(){
 
   // add node 0 to closed with distance 0
   append_node_to_closed(0, 0.0);
@@ -119,34 +135,27 @@ double Dijkstra::get_avg_shortest_path(){
 
     // std::cout << "lowest node " << lowest_node << " lowest val " << "\n";
 
-
-    
-    if (is_node_in_open(lowest_node) >= 0){
-    // scan L's connections for > 0, add them (idx, value + L's value) to open
-      int current_node = lowest_node;
-      double current_node_val = lowest_value;
-      for (int i = 0; i < size_; i++){
-        if (graph_[current_node][i] > 0){
-          if (is_node_in_closed(i) < 0){
-            open_.push_back(std::tuple<int, double>(i, (graph_[current_node][i] + current_node_val) ));
-          }
+    // add L's connections to open as (idx, value + L's value) if they're not in open or closed
+    for (int i = 0; i < size_; i++){
+      if (graph_[lowest_node][i] > 0){
+        if (is_node_in_closed(i) < 0 && is_node_in_open(i) < 0){
+          open_.push_back(std::tuple<int, double>(i, (graph_[lowest_node][i] + lowest_value) ));
         }
       }
-    // add L to closed
-      if (is_node_in_closed(current_node) < 0){
-        append_node_to_closed(current_node, current_node_val);
-      }
-
     }
-  // remove L from open
-    open_.erase(open_.begin() + lowest_idx - 1);
 
-    print_vectors();
+  // add L to closed if it's not there
+    if (is_node_in_closed(lowest_node) < 0){
+      append_node_to_closed(lowest_node, lowest_value);
+    }
+    
+  // remove L from open
+    open_.erase(open_.begin() + lowest_idx);
+
+    // print_vectors();
   } 
-  return 0.0;
 }
 
-// build 'check if node in vector' function
 // returns the index if in, -1 if not
 int Dijkstra::is_node_in_open(int node){
   return is_node_in_vector(open_, node);
